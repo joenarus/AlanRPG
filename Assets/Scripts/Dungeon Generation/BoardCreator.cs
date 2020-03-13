@@ -84,9 +84,9 @@ public class BoardCreator : MonoBehaviour
 
                 for (int k = 0; k < currentRoom.roomHeight; k++)
                 {
-                    int yCoord = currentRoom.yPos + k;
+                    int zCoord = currentRoom.zPos + k;
 
-                    tiles[xCoord][yCoord] = TileType.Floor;
+                    tiles[xCoord][zCoord] = TileType.Floor;
                 }
             }
         }
@@ -100,24 +100,24 @@ public class BoardCreator : MonoBehaviour
             for (int j = 0; j < currentCorridor.corridorLength; j++)
             {
                 int xCoord = currentCorridor.startXPos;
-                int yCoord = currentCorridor.startYPos;
+                int zCoord = currentCorridor.startZPos;
 
                 switch (currentCorridor.direction)
                 {
                     case Direction.North:
-                        yCoord += j;
+                        zCoord += j;
                         break;
                     case Direction.East:
                         xCoord += j;
                         break;
                     case Direction.South:
-                        yCoord -= j;
+                        zCoord -= j;
                         break;
                     case Direction.West:
                         xCoord -= j;
                         break;
                 }
-                tiles[xCoord][yCoord] = TileType.Floor;
+                tiles[xCoord][zCoord] = TileType.Floor;
             }
         }
     }
@@ -141,43 +141,43 @@ public class BoardCreator : MonoBehaviour
     {
         float leftEdgeX = -1f;
         float rightEdgeX = columns + 0f;
-        float bottomEdgeY = -1f;
-        float topEdgeY = rows + 0f;
+        float bottomEdgeZ = -1f;
+        float topEdgeZ = rows + 0f;
 
-        InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeY, topEdgeY);
-        InstantiateVerticalOuterWall(rightEdgeX, bottomEdgeY, topEdgeY);
+        InstantiateVerticalOuterWall(leftEdgeX, bottomEdgeZ, topEdgeZ);
+        InstantiateVerticalOuterWall(rightEdgeX, bottomEdgeZ, topEdgeZ);
 
-        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, bottomEdgeY);
-        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, topEdgeY);
+        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, bottomEdgeZ);
+        InstantiateHorizontalOuterWall(leftEdgeX + 1f, rightEdgeX - 1f, topEdgeZ);
     }
 
-    void InstantiateVerticalOuterWall(float xCoord, float startingY, float endingY)
+    void InstantiateVerticalOuterWall(float xCoord, float startingZ, float endingZ)
     {
-        float currentY = startingY;
+        float currentZ = startingZ;
 
-        while (currentY <= endingY)
+        while (currentZ <= endingZ)
         {
-            InstantiateFromArray(outerWallTiles, xCoord, currentY);
-            currentY++;
+            InstantiateFromArray(outerWallTiles, xCoord, currentZ);
+            currentZ++;
         }
     }
 
-    void InstantiateHorizontalOuterWall(float startingX, float endingX, float yCoord)
+    void InstantiateHorizontalOuterWall(float startingX, float endingX, float zCoord)
     {
         float currentX = startingX;
 
         while (currentX <= endingX)
         {
-            InstantiateFromArray(outerWallTiles, currentX, yCoord);
+            InstantiateFromArray(outerWallTiles, currentX, zCoord);
             currentX++;
         }
     }
 
-    void InstantiateFromArray(GameObject[] prefabs, float xCoord, float yCoord)
+    void InstantiateFromArray(GameObject[] prefabs, float xCoord, float zCoord)
     {
         int randomIndex = Random.Range(0, prefabs.Length);
 
-        Vector3 position = new Vector3(xCoord, yCoord, 0f);
+        Vector3 position = new Vector3(xCoord, 0f, zCoord);
 
         GameObject tileInstance = Instantiate(prefabs[randomIndex], position, Quaternion.identity) as GameObject;
 
