@@ -6,7 +6,7 @@ public class Room
     public int zPos;
     public int roomWidth;
     public int roomHeight;
-    public Direction enteringCorridor;
+    public PathDirection enteringCorridor;
 
     public void SetupRoom(IntRange widthRange, IntRange heightRange, int columns, int rows)
     {
@@ -26,28 +26,28 @@ public class Room
 
         switch (corridor.direction)
         {
-            case Direction.North:
+            case PathDirection.North:
                 roomHeight = Mathf.Clamp(roomHeight, 1, rows - corridor.EndPositionZ);
                 zPos = corridor.EndPositionZ;
 
                 xPos = Random.Range(corridor.EndPositionX - roomWidth + 1, corridor.EndPositionX);
                 xPos = Mathf.Clamp(xPos, 0, columns - roomWidth);
                 break;
-            case Direction.East:
+            case PathDirection.East:
                 roomWidth = Mathf.Clamp(roomWidth, 1, columns - corridor.EndPositionX);
                 xPos = corridor.EndPositionX;
 
                 zPos = Random.Range(corridor.EndPositionZ - roomHeight + 1, corridor.EndPositionZ);
                 zPos = Mathf.Clamp(zPos, 0, rows - roomHeight);
                 break;
-            case Direction.South:
+            case PathDirection.South:
                 roomHeight = Mathf.Clamp(roomHeight, 1, corridor.EndPositionZ);
                 zPos = corridor.EndPositionZ - roomHeight + 1;
 
                 xPos = Random.Range(corridor.EndPositionX - roomWidth + 1, corridor.EndPositionX);
                 xPos = Mathf.Clamp(xPos, 0, columns - roomWidth);
                 break;
-            case Direction.West:
+            case PathDirection.West:
                 roomWidth = Mathf.Clamp(roomWidth, 1, corridor.EndPositionX);
                 xPos = corridor.EndPositionX - roomWidth + 1;
                 

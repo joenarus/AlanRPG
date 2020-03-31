@@ -104,16 +104,16 @@ public class BoardCreator : MonoBehaviour
 
                 switch (currentCorridor.direction)
                 {
-                    case Direction.North:
+                    case PathDirection.North:
                         zCoord += j;
                         break;
-                    case Direction.East:
+                    case PathDirection.East:
                         xCoord += j;
                         break;
-                    case Direction.South:
+                    case PathDirection.South:
                         zCoord -= j;
                         break;
-                    case Direction.West:
+                    case PathDirection.West:
                         xCoord -= j;
                         break;
                 }
