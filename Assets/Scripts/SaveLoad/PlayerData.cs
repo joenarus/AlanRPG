@@ -17,8 +17,8 @@ public class PlayerData
     public float[] position;
     public PlayerData(Player player)
     {
-        level = player.level;
-        health = player.health;
+        level = player.level.value;
+        health = player.health.value;
         mana = player.mana;
         strength = player.strength;
         dexterity = player.dexterity;

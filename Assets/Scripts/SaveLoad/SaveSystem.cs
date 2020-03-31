@@ -6,11 +6,12 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public static class SaveSystem
 {
+    private static string playerPath = Application.persistentDataPath + "/player.ajrpg";
     public static void SavePlayer(Player player)
     {
         BinaryFormatter formatter = new BinaryFormatter();
-        string path = Application.persistentDataPath + "/player.ajrpg";
-        FileStream stream = new FileStream(path, FileMode.Create);
+
+        FileStream stream = new FileStream(playerPath, FileMode.Create);
 
         PlayerData data = new PlayerData(player);
 
@@ -20,11 +21,10 @@ public static class SaveSystem
 
     public static PlayerData LoadPlayer()
     {
-        string path = Application.persistentDataPath + "/player.ajrpg";
-        if (File.Exists(path))
+        if (File.Exists(playerPath))
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream stream = new FileStream(path, FileMode.Open);
+            FileStream stream = new FileStream(playerPath, FileMode.Open);
 
             PlayerData data = formatter.Deserialize(stream) as PlayerData;
             stream.Close();
@@ -33,7 +33,7 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("Save file not found in " + path);
+            Debug.LogError("Save file not found in " + playerPath);
             return null;
         }
     }

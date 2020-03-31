@@ -17,6 +17,8 @@ public class BoardCreator : MonoBehaviour
     public GameObject[] floorTiles;
     public GameObject[] wallTiles;
     public GameObject[] outerWallTiles;
+    public GameObject stairs;
+    public GameObject player;
 
     private TileType[][] tiles;
     private Room[] rooms;
@@ -24,6 +26,11 @@ public class BoardCreator : MonoBehaviour
     private GameObject boardHolder;
 
     private void Start()
+    {
+        CreateLevel();
+    }
+
+    public void CreateLevel()
     {
         boardHolder = new GameObject("BoardHolder");
 
@@ -51,9 +58,24 @@ public class BoardCreator : MonoBehaviour
     void CreateRoomsAndCorridors()
     {
         rooms = new Room[numRooms.Random];
-
         corridors = new Corridor[rooms.Length - 1];
 
+        //Setup stair location
+        IntRange stairsRange = new IntRange(1, rooms.Length - 1);
+        int stairsIdx = stairsRange.Random;
+
+        //Setup player location
+        IntRange playerLocale = new IntRange(1, rooms.Length - 1);
+        bool playerPlaced = false;
+        int playerIdx = -1;
+        while (!playerPlaced)
+        {
+            playerIdx = playerLocale.Random;
+            if (playerIdx != stairsIdx)
+            {
+                playerPlaced = true;
+            }
+        }
         rooms[0] = new Room();
         corridors[0] = new Corridor();
 
@@ -69,6 +91,16 @@ public class BoardCreator : MonoBehaviour
                 corridors[i] = new Corridor();
 
                 corridors[i].SetupCorridor(rooms[i], corridorLength, roomWidth, roomHeight, columns, rows, false);
+            }
+            if (i == playerIdx)
+            {
+                Vector3 playerPos = new Vector3 (rooms[i].xPos, 1, rooms[i].zPos);
+                Instantiate(player, playerPos, Quaternion.identity);
+            }
+            if (i == stairsIdx)
+            {
+                Vector3 stairsPos = new Vector3 (rooms[i].xPos, 0, rooms[i].zPos);
+                Instantiate(stairs, stairsPos, Quaternion.identity);
             }
         }
     }

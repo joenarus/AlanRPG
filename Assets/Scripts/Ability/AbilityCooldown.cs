@@ -19,6 +19,7 @@ public class AbilityCooldown : MonoBehaviour
 
     void Start()
     {
+        raycastHolder = GameObject.Find("CharacterItems");
         Initialize(ability, raycastHolder);
     }
 
