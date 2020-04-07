@@ -17,10 +17,7 @@ public class Enemy : Interactable
     public override void Interact()
     {
         base.Interact();
-        CharacterCombat playerCombat = playerManager.player.GetComponent<CharacterCombat>();
-        if(playerCombat != null)
-        {
-            playerCombat.Attack(myStats);
-        }
+        if (BattleSystem.instance.state == BattleState.END)
+            BattleSystem.instance.StartBattle(playerManager.player, gameObject);
     }
 }

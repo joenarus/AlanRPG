@@ -17,7 +17,7 @@ public class CharacterStats : MonoBehaviour
             healthbar.SetMaxHealth(maxHealth);
     }
 
-    public void TakeDamage(int damage)
+    public bool TakeDamage(int damage)
     {
         damage -= armor.GetValue();
         damage = Mathf.Clamp(damage, 0, int.MaxValue);
@@ -30,6 +30,11 @@ public class CharacterStats : MonoBehaviour
         if (currentHealth <= 0)
         {
             Die();
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
