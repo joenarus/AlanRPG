@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
+
         // If no battle is happening
         if (BattleSystem.instance.state == BattleState.END)
         {

@@ -37,6 +37,10 @@ public class BattleSystem : MonoBehaviour
         //TODO: Move characters to appropriate places
         //TODO: Enable UI for combat
         //TODO: Text for combat initiation/initiative
+        PlayerMotor playerMotor = player.GetComponent<PlayerMotor>();
+        playerMotor.MoveToPoint(player.transform.position);
+        playerMotor.StopFollowingTarget();
+        
 
         yield return new WaitForSeconds(2f);
 

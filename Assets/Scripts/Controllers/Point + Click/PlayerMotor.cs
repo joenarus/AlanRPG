@@ -14,10 +14,13 @@ public class PlayerMotor : MonoBehaviour
 
     void Update()
     {
-        if (target != null)
+        if (BattleSystem.instance.state == BattleState.END)
         {
-            agent.SetDestination(target.position);
-            FaceTarget();
+            if (target != null)
+            {
+                agent.SetDestination(target.position);
+                FaceTarget();
+            }
         }
     }
 
