@@ -22,30 +22,36 @@ public class PlayerController : MonoBehaviour
     {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
-        if (Input.GetMouseButtonDown(0))
+        // If no battle is happening
+        if (BattleSystem.instance.state == BattleState.END)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100, movementMask))
+            if (Input.GetMouseButtonDown(0))
             {
-                // Move to what we hit
-                motor.MoveToPoint(hit.point);
-                RemoveFocus();
-            }
-        }
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
 
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, 100))
-            {
-                Interactable interactable = hit.collider.GetComponent<Interactable>();
-                if (interactable != null)
+                if (Physics.Raycast(ray, out hit, 100, movementMask))
                 {
-                    SetFocus(interactable);
+                    // Move to what we hit
+                    motor.MoveToPoint(hit.point);
+                    RemoveFocus();
+                }
+            }
+
+
+            //TODO: make UI show up for interaction menu
+            if (Input.GetMouseButtonDown(1))
+            {
+                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+
+                if (Physics.Raycast(ray, out hit, 100))
+                {
+                    Interactable interactable = hit.collider.GetComponent<Interactable>();
+                    if (interactable != null)
+                    {
+                        SetFocus(interactable);
+                    }
                 }
             }
         }

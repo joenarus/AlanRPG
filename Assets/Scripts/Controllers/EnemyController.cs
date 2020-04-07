@@ -18,18 +18,21 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float distance = Vector3.Distance(target.position, transform.position);
-
-        if (distance <= lookRadius)
+        //If Battle system isn't engaged, follow target
+        if (BattleSystem.instance.state == BattleState.END)
         {
-            agent.SetDestination(target.position);
+            float distance = Vector3.Distance(target.position, transform.position);
 
-            if (distance <= agent.stoppingDistance)
+            if (distance <= lookRadius)
             {
-                // If enemy detects player 
-                if (BattleSystem.instance.state == BattleState.END)
+                agent.SetDestination(target.position);
+
+                if (distance <= agent.stoppingDistance)
+                {
+                    // If enemy detects player 
                     BattleSystem.instance.StartBattle(target.gameObject, gameObject);
-                FaceTarget();
+                    FaceTarget();
+                }
             }
         }
     }
