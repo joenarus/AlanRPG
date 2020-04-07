@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
-
+using System.Collections.Generic;
+using System.Collections;
+public enum Interactions { ATTACK, TALK, CANCEL }
 public class Interactable : MonoBehaviour
 {
     public float radius = 3f;
@@ -7,6 +9,8 @@ public class Interactable : MonoBehaviour
     bool isFocus = false;
     Transform player;
     bool hasInteracted = false;
+
+    public List<Interactions> interactions = new List<Interactions>();
 
     public virtual void Interact()
     {

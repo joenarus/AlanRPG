@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 [RequireComponent(typeof(PlayerMotor))]
 public class PlayerController : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class PlayerController : MonoBehaviour
     public LayerMask movementMask;
     Camera cam;
     PlayerMotor motor;
+    
+    public GameObject interactPanel;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +26,10 @@ public class PlayerController : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject())
             return;
 
-        // If no battle is happening
-        if (BattleSystem.instance.state == BattleState.END)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (Input.GetMouseButtonDown(0))
+            // If no battle is happening -> Move normally
+            if (BattleSystem.instance.state == BattleState.END)
             {
                 Ray ray = cam.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
@@ -38,24 +41,31 @@ public class PlayerController : MonoBehaviour
                     RemoveFocus();
                 }
             }
+        }
 
+        //TODO: make UI show up for interaction menu
+        if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
 
-            //TODO: make UI show up for interaction menu
-            if (Input.GetMouseButtonDown(1))
+            if (Physics.Raycast(ray, out hit, 100))
             {
-                Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-
-                if (Physics.Raycast(ray, out hit, 100))
+                Interactable interactable = hit.collider.GetComponent<Interactable>();
+                if (interactable != null)
                 {
-                    Interactable interactable = hit.collider.GetComponent<Interactable>();
-                    if (interactable != null)
+                    //If no battle is happening -> Activate interaction panel
+                    if (BattleSystem.instance.state == BattleState.END)
                     {
-                        SetFocus(interactable);
+                        InteractPanel panel = interactPanel.GetComponent<InteractPanel>();
+                        panel.setInteractions(interactable.interactions);
+                        interactPanel.SetActive(true);
+                        //SetFocus(interactable);
                     }
                 }
             }
         }
+
     }
 
     void SetFocus(Interactable newFocus)
