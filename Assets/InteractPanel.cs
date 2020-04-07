@@ -10,19 +10,23 @@ public class InteractPanel : MonoBehaviour
     // Start is called before the first frame update
     public void setInteractions(List<Interactions> targetInteractions)
     {
-        for (int i = 0; i < interactions.Count; i++)
+        removeAllButtons();
+        for (int i = 0; i < targetInteractions.Count; i++)
         {
-            if (i < targetInteractions.Count)
-            {
-                string param = targetInteractions[i].ToString();
-                interactions[i].GetComponent<Button>().onClick.AddListener(() => ActivateInteraction(param));
-                interactions[i].GetComponentInChildren<Text>().text = param;
-                interactions[i].SetActive(true);
-            }
-            else
-            {
-                interactions[i].SetActive(false);
-            }
+            string param = targetInteractions[i].ToString();
+            var interactButton = Instantiate(interactPrefab, transform);
+            interactButton.GetComponent<Button>().onClick.AddListener(() => ActivateInteraction(param));
+            interactButton.GetComponentInChildren<Text>().text = param;
+            interactions.Add(interactButton);
+        }
+    }
+
+    void removeAllButtons()
+    {
+        for (int i = interactions.Count - 1; i >= 0; i--)
+        {
+            Destroy(interactions[i]);
+            interactions.RemoveAt(i);
         }
     }
 
@@ -38,6 +42,7 @@ public class InteractPanel : MonoBehaviour
                 break;
             case "CANCEL":
                 Debug.Log("CANCEL");
+                gameObject.SetActive(false);
                 break;
             default:
                 Debug.Log("DEFAULT");

@@ -8,7 +8,8 @@ public class BattleSystem : MonoBehaviour
 {
     #region Singleton
     public static BattleSystem instance;
-    void Awake() {
+    void Awake()
+    {
         instance = this;
         instance.state = BattleState.END;
     }
@@ -16,7 +17,9 @@ public class BattleSystem : MonoBehaviour
     public GameObject player;
     public GameObject enemy; //TODO: List of nearby enemies engaged in combat
     public BattleState state;
-    
+
+    public GameObject playerAbilityCanvas;
+
     CharacterStats playerStats;
     CharacterStats enemyStats;
     // Start is called before the first frame update
@@ -35,12 +38,13 @@ public class BattleSystem : MonoBehaviour
         enemyStats = enemy.GetComponent<CharacterStats>();
         Debug.Log("Battle started between " + player.name + " and " + enemy.name);
         //TODO: Move characters to appropriate places
-        //TODO: Enable UI for combat
+        //Enable UI for combat
+        playerAbilityCanvas.SetActive(true);
         //TODO: Text for combat initiation/initiative
         PlayerMotor playerMotor = player.GetComponent<PlayerMotor>();
         playerMotor.MoveToPoint(player.transform.position);
         playerMotor.StopFollowingTarget();
-        
+
 
         yield return new WaitForSeconds(2f);
 
@@ -57,19 +61,17 @@ public class BattleSystem : MonoBehaviour
     IEnumerator PlayerAttack()
     {
         bool isDead = enemyStats.TakeDamage(playerStats.damage.GetValue());
+        state = BattleState.ENEMYTURN;
         // damage enemy
         yield return new WaitForSeconds(2f); //TODO: Wait for length of animation
         if (isDead)
         {
             state = BattleState.WON;
             EndBattle();
-            //END BATTLE
         }
         else
         {
-            state = BattleState.ENEMYTURN;
             StartCoroutine(EnemyTurn());
-            //ENEMY TURN
         }
     }
 
@@ -82,8 +84,6 @@ public class BattleSystem : MonoBehaviour
         bool isDead = playerStats.TakeDamage(enemyStats.damage.GetValue());
 
         //Set HP <- kick off event?
-
-        yield return new WaitForSeconds(1f);
 
         if (isDead)
         {
@@ -99,6 +99,7 @@ public class BattleSystem : MonoBehaviour
 
     void EndBattle()
     {
+        playerAbilityCanvas.SetActive(false);
         if (state == BattleState.WON)
         {
             Debug.Log("You won the battle");

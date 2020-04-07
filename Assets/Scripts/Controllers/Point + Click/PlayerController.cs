@@ -10,8 +10,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask movementMask;
     Camera cam;
     PlayerMotor motor;
-    
+
     public GameObject interactPanel;
+    public GameObject interactOriginPoint;
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +58,7 @@ public class PlayerController : MonoBehaviour
                     //If no battle is happening -> Activate interaction panel
                     if (BattleSystem.instance.state == BattleState.END)
                     {
+                        interactOriginPoint.transform.position = Input.mousePosition;
                         InteractPanel panel = interactPanel.GetComponent<InteractPanel>();
                         panel.setInteractions(interactable.interactions);
                         interactPanel.SetActive(true);
