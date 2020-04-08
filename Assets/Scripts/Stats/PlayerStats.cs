@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerStats : CharacterStats
 {
+    public GameEvent playerDeath;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,11 @@ public class PlayerStats : CharacterStats
             armor.RemoveModifier(oldItem.armorModifier);
             damage.RemoveModifier(oldItem.damageModifier);
         }
+    }
 
+    public override void Die()
+    {
+        base.Die();
+        playerDeath.Raise();
     }
 }

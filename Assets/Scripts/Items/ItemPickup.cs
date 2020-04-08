@@ -18,6 +18,5 @@ public class ItemPickup : Interactable
         {
             Destroy(gameObject);
         }
-
     }
 }

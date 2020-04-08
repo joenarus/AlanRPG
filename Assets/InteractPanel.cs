@@ -6,10 +6,12 @@ using UnityEngine.UI;
 public class InteractPanel : MonoBehaviour
 {
     public GameObject interactPrefab;
+    private Interactable target;
     public List<GameObject> interactions;
     // Start is called before the first frame update
-    public void setInteractions(List<Interactions> targetInteractions)
+    public void setInteractions(List<Interactions> targetInteractions, Interactable interactionTarget)
     {
+        target = interactionTarget;
         removeAllButtons();
         for (int i = 0; i < targetInteractions.Count; i++)
         {
@@ -36,9 +38,18 @@ public class InteractPanel : MonoBehaviour
         {
             case "ATTACK":
                 Debug.Log("ATTACK");
+                PlayerManager.instance.player.GetComponent<PlayerController>()
+                .SetFocus(target);
+                break;
+            case "PICKUP":
+                Debug.Log("PICK UP");
+                PlayerManager.instance.player.GetComponent<PlayerController>()
+                .SetFocus(target.GetComponent<Interactable>());
                 break;
             case "TALK":
                 Debug.Log("TALK");
+                PlayerManager.instance.player.GetComponent<PlayerController>()
+                .SetFocus(target.GetComponent<Interactable>());
                 break;
             case "CANCEL":
                 Debug.Log("CANCEL");
@@ -48,5 +59,8 @@ public class InteractPanel : MonoBehaviour
                 Debug.Log("DEFAULT");
                 break;
         }
+
+        gameObject.SetActive(false);
+        target = null;
     }
 }

@@ -60,17 +60,15 @@ public class PlayerController : MonoBehaviour
                     {
                         interactOriginPoint.transform.position = Input.mousePosition;
                         InteractPanel panel = interactPanel.GetComponent<InteractPanel>();
-                        panel.setInteractions(interactable.interactions);
+                        panel.setInteractions(interactable.interactions, interactable);
                         interactPanel.SetActive(true);
-                        //SetFocus(interactable);
                     }
                 }
             }
         }
-
     }
 
-    void SetFocus(Interactable newFocus)
+    public void SetFocus(Interactable newFocus)
     {
         if (newFocus != focus)
         {

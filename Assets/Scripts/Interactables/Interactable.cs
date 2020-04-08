@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Collections;
-public enum Interactions { ATTACK, TALK, CANCEL }
+public enum Interactions { ATTACK, TALK, PICKUP, CANCEL }
 public class Interactable : MonoBehaviour
 {
     public float radius = 3f;
