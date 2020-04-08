@@ -16,15 +16,21 @@ public class LevelLoader : MonoBehaviour
         }
     }
 
+    public void LoadSpecificLevel(int idx) {
+        StartCoroutine(StartTransition());
+        StartCoroutine(LoadLevel(idx));
+    }
+
     public void LoadNextLevel()
     {
+        StartCoroutine(StartTransition());
         StartCoroutine(LoadLevel(SceneManager.GetActiveScene().buildIndex + 1));
     }
 
     public void LoadTown()
     {
         StartCoroutine(StartTransition());
-        StartCoroutine(LoadLevel(0));
+        StartCoroutine(LoadLevel(1));
     }
     IEnumerator StartTransition()
     {
