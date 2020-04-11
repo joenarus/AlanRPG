@@ -1,20 +1,45 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterStats : MonoBehaviour
 {
-    public int maxHealth = 100;
-    public int currentHealth { get; private set; }
+    public BaseStats baseStats;
+    public Stat maxHealth;
     public Stat damage;
     public Stat armor;
+
     public HealthBar healthbar;
+    public GameObject levelBox;
+    public int currentHealth { get; private set; }
 
     void Awake()
     {
-        currentHealth = maxHealth;
+        ReadBaseStats();
+    }
+
+    void ReadBaseStats()
+    {
+        //Warrior
+        damage.AddModifier(baseStats.strength.GetValue());
+
+        // Caster
+        damage.AddModifier(baseStats.intelligence.GetValue());
+
+        // Armor
+        armor.AddModifier(baseStats.dexterity.GetValue());
+
+        maxHealth = baseStats.maxHealth;
+
+        currentHealth = maxHealth.GetValue();
         if (healthbar != null)
-            healthbar.SetMaxHealth(maxHealth);
+            healthbar.SetMaxHealth(maxHealth.GetValue());
+        
+        if(levelBox != null)
+        {
+            levelBox.GetComponentInChildren<TMPro.TextMeshProUGUI>().SetText(baseStats.level.GetValue().ToString());
+        }
     }
 
     public bool TakeDamage(int damage)

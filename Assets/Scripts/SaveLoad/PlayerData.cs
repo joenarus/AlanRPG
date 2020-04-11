@@ -6,8 +6,11 @@ using UnityEngine;
 public class PlayerData
 {
     public int level;
-    public int health;
-    public int mana;
+    public int maxHealth;
+    public int currentHealth;
+    public int maxMana;
+    public int currentMana;
+
     public int strength;
     public int dexterity;
     public int constitution;
@@ -18,8 +21,8 @@ public class PlayerData
     public PlayerData(Player player)
     {
         level = player.level.value;
-        health = player.health.value;
-        mana = player.mana;
+        maxHealth = player.health.value;
+        maxMana = player.mana;
         strength = player.strength;
         dexterity = player.dexterity;
         constitution = player.constitution;

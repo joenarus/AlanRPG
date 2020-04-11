@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5547899e4bd73454cb29957b36024296, type: 3}
+  m_Name: Ooze
+  m_EditorClassIdentifier: 
+  level:
+    baseValue: 1
+  maxHealth:
+    baseValue: 5
+  maxMana:
+    baseValue: 0
+  strength:
+    baseValue: 2
+  dexterity:
+    baseValue: 0
+  constitution:
+    baseValue: 1
+  intelligence:
+    baseValue: 0
+  wisdom:
+    baseValue: 0
+  charisma:
+    baseValue: 0

@@ -5,9 +5,8 @@ using UnityEngine;
 [System.Serializable]
 public class Stat
 {
-    // Start is called before the first frame update
     [SerializeField]
-    private int baseValue;
+    private int baseValue = 0;
 
     private List<int> modifiers = new List<int>();
     public int GetValue()
